@@ -219,7 +219,7 @@ namespace GitHub.Runner.Worker
                     VssCredentials serverCredential = VssUtil.GetVssCredential(systemConnection);
 
                     var runnerServer = HostContext.GetService<IRunnerServer>();
-                    await runnerServer.ConnectAsync(new Uri(_runnerSettings.ServerUrl), serverCredential);
+                    await runnerServer.ConnectAsync(systemConnection.Url, serverCredential);
                     var serverPackages = await runnerServer.GetPackagesAsync("agent", BuildConstants.RunnerPackage.PackageName, 10, false, CancellationToken.None);
                     Trace.Info($"Newer packages {StringUtil.ConvertToJson(serverPackages.Select(x => x.Version.ToString()))}");
 
@@ -261,11 +261,11 @@ namespace GitHub.Runner.Worker
 
                     if (result == TaskResult.Failed && isOldVersion)
                     {
-                        jobContext.Warning($"The job failure might caused by an out of date runner. Please update runner to latest version.");
+                        jobContext.Warning($"The job failure might caused by an out of date runner. Please update runner to latest version {serverPackages[0].DownloadUrl}.");
                     }
                     else if (isDeprecatedVersion)
                     {
-                        jobContext.Warning($"Runner version is deprecated. Please update runner to latest version.");
+                        jobContext.Warning($"Runner version is deprecated. Please update runner to latest version {serverPackages[0].DownloadUrl}.");
                     }
                 }
                 catch (Exception ex)
