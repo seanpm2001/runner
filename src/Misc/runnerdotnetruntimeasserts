@@ -1,3 +1,4 @@
+api-ms-win-core-console-l1-1-0.dll
 api-ms-win-core-console-l1-2-0.dll
 api-ms-win-core-datetime-l1-1-0.dll
 api-ms-win-core-debug-l1-1-0.dll
@@ -42,6 +43,7 @@ clrcompression.dll
 clretwrc.dll
 clrjit.dll
 coreclr.dll
+createdump
 createdump.exe
 dbgshim.dll
 hostfxr.dll
